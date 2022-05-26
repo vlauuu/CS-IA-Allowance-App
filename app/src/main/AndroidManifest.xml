@@ -10,6 +10,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AllowanceApp">
         <activity
+            android:name=".MonthOverviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddAllowanceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddSpendingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
