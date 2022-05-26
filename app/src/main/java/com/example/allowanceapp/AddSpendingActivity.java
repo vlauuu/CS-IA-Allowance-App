@@ -22,7 +22,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
-public class AddSpendingActivity extends AppCompatActivity {
+public class AddSpendingActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
 
     FirebaseAuth mAuth;
     FirebaseUser mUser;
