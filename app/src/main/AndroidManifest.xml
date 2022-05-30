@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AllowanceApp">
         <activity
+            android:name=".DeleteSpendingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MonthlySpendingActivity"
+            android:exported="false" />
+        <activity
             android:name=".MonthOverviewActivity"
             android:exported="false" />
         <activity

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
@@ -63,10 +64,15 @@ public class AddSpendingActivity extends AppCompatActivity implements DatePicker
 
         Double costDouble = Double.parseDouble(costString);
 
-        Spending newSpending = new Spending(mUser.getEmail(), itemString, date, costDouble, descriptionString, false);
+        Intent intent = getIntent();
+        String myUserEmail = intent.getExtras().getString("currUser");
+
+        Spending newSpending = new Spending(myUserEmail, itemString, date, costDouble, descriptionString, false);
+
+        System.out.println(date);
 
         firestore.collection("Spendings").document(
-                itemString + " " + date).set(newSpending);
+                itemString + " " + myUserEmail).set(newSpending);
 
         Toast.makeText(getApplicationContext(),"Spending Added", Toast.LENGTH_LONG).show();
 
@@ -85,7 +91,7 @@ public class AddSpendingActivity extends AppCompatActivity implements DatePicker
 
                                 String thisEmail = (String) docData.get("email");
 
-                                if (thisEmail.equals(mUser.getEmail()))
+                                if (thisEmail.equals(myUserEmail))
                                 {
                                     Double thisAllowance = doc.getDouble("allowance");
 

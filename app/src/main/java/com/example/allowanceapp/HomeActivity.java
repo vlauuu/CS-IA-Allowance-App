@@ -20,6 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +29,7 @@ public class HomeActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseUser mUser;
     private FirebaseFirestore firestore;
+    String myUserEmail;
 
 
     @Override
@@ -38,6 +40,41 @@ public class HomeActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
         firestore = FirebaseFirestore.getInstance();
+
+        Intent intent = getIntent();
+        myUserEmail = intent.getExtras().getString("currUser");
+
+        TextView allowanceView = (TextView)findViewById(R.id.textViewAllowance);
+
+        firestore.collection("Users").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task)
+                    {
+                        if (task.isSuccessful())
+                        {
+                            List<DocumentSnapshot> ds = task.getResult().getDocuments();
+
+                            for(DocumentSnapshot doc : ds)
+                            {
+                                Map<String, Object> docData = doc.getData();
+
+                                String thisEmail = (String) docData.get("email");
+
+                                Intent intent = getIntent();
+                                myUserEmail = intent.getExtras().getString("currUser");
+
+                                if (thisEmail.equals(myUserEmail))
+                                {
+                                    Double thisAllowance = doc.getDouble("allowance");
+
+                                    allowanceView.setText("Current balance is: " + thisAllowance);
+                                }
+                            }
+                        }
+                    }
+                });
+
     }
 
     public void updateAllowance(View v) {
@@ -59,7 +96,10 @@ public class HomeActivity extends AppCompatActivity {
 
                                 String thisEmail = (String) docData.get("email");
 
-                                if (thisEmail.equals(mUser.getEmail()))
+                                Intent intent = getIntent();
+                                myUserEmail = intent.getExtras().getString("currUser");
+
+                                if (thisEmail.equals(myUserEmail))
                                 {
                                     Double thisAllowance = doc.getDouble("allowance");
 
@@ -72,26 +112,33 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void goToAddAllowance(View v) {
-        if (mUser != null){
-            Intent intent = new Intent(this, AddAllowanceActivity.class);
-            startActivity(intent);
-            finish();
-        }
+        Intent intent = getIntent();
+        String myUserEmail = intent.getExtras().getString("currUser");
+
+        Intent newIntent = new Intent(this, AddAllowanceActivity.class);
+        newIntent.putExtra("currUser", myUserEmail);
+        startActivity(newIntent);
+        finish();
     }
 
     public void goToAddSpending(View v) {
-        if (mUser != null){
-            Intent intent = new Intent(this, AddSpendingActivity.class);
-            startActivity(intent);
-            finish();
-        }
+        Intent intent = getIntent();
+        String myUserEmail = intent.getExtras().getString("currUser");
+
+        Intent newIntent = new Intent(this, AddSpendingActivity.class);
+        newIntent.putExtra("currUser", myUserEmail);
+        startActivity(newIntent);
+        finish();
     }
 
     public void goToCheckSpending(View v) {
-        if (mUser != null){
-            Intent intent = new Intent(this, MonthOverviewActivity.class);
-            startActivity(intent);
-            finish();
-        }
+        Intent intent = getIntent();
+        String myUserEmail = intent.getExtras().getString("currUser");
+
+        Intent newIntent = new Intent(this, MonthOverviewActivity.class);
+        newIntent.putExtra("currUser", myUserEmail);
+        startActivity(newIntent);
+        finish();
     }
+
 }

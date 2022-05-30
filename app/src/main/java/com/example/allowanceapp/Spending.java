@@ -24,6 +24,14 @@ public class Spending {
         this.deleted = deleted;
     }
 
+    public String getItem() {
+        return item;
+    }
+
+    public void setItem(String item) {
+        this.item = item;
+    }
+
     public String getEmail() {
         return email;
     }

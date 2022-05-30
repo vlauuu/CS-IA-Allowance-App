@@ -3,9 +3,11 @@ package com.example.allowanceapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -25,6 +27,7 @@ public class AddAllowanceActivity extends AppCompatActivity {
     private FirebaseFirestore firestore;
 
     private EditText addAllowanceField;
+    String myUserEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,9 @@ public class AddAllowanceActivity extends AppCompatActivity {
         firestore = FirebaseFirestore.getInstance();
 
         addAllowanceField = findViewById(R.id.editTextAddAllowance);
+
+        Intent intent = getIntent();
+        myUserEmail = intent.getExtras().getString("currUser");
 
     }
 
@@ -59,7 +65,7 @@ public class AddAllowanceActivity extends AppCompatActivity {
 
                                 String thisEmail = (String) docData.get("email");
 
-                                if (thisEmail.equals(mUser.getEmail()))
+                                if (thisEmail.equals(myUserEmail))
                                 {
                                     Double thisAllowance = doc.getDouble("allowance");
 
@@ -67,6 +73,7 @@ public class AddAllowanceActivity extends AppCompatActivity {
 
                                     firestore.collection("Users").document(thisEmail).update("allowance", newAllowance);
 
+                                    Toast.makeText(getApplicationContext(), "Allowance updated", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }

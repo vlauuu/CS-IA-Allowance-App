@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MonthOverviewActivity">
+    tools:context=".MonthlySpendingActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recView"
-        android:layout_width="305dp"
-        android:layout_height="604dp"
-        android:layout_marginTop="60dp"
+        android:id="@+id/recView2"
+        android:layout_width="346dp"
+        android:layout_height="571dp"
+        android:layout_marginTop="80dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
