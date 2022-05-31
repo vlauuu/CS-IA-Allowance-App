@@ -94,26 +94,6 @@ public class MonthOverviewActivity extends AppCompatActivity {
                                         int thisMonthInt = Integer.parseInt(thisMonth);
                                         boolean noMatch = false;
 
-//                                        if(!monthAndItems.isEmpty()){
-//                                            for ( int key : monthAndItems.keySet()) {
-//                                                if(key == thisMonthInt)
-//                                                {
-//                                                    monthAndItems.put(thisMonthInt, monthAndItems.get(key) + 1);
-//                                                }
-//                                                else
-//                                                {
-//                                                    noMatch = true;
-//                                                }
-//
-//                                                if(noMatch){
-//                                                    monthAndItems.put(thisMonthInt, 1);
-//                                                }
-//                                            }
-//                                        }
-//                                        else {
-//                                            monthAndItems.put(thisMonthInt, 1);
-//                                        }
-
                                         ArrayList<Integer> allKeys = new ArrayList<Integer>();
 
                                         for (Map.Entry<Integer,Integer> entry : monthAndItems.entrySet())
@@ -150,6 +130,24 @@ public class MonthOverviewActivity extends AppCompatActivity {
 
                             ArrayList<Integer> finalKeys = new ArrayList<Integer>();
 
+                            int temp;
+
+                            if (finalKeys.size() > 1)
+                            {
+                                for (int x = 0; x < finalKeys.size(); x++)
+                                {
+                                    for (int i = 0; i < finalKeys.size() - i; i++) {
+                                        if (finalKeys.get(i).compareTo(finalKeys.get(i + 1)) > 0)
+                                        {
+                                            temp = finalKeys.get(i);
+                                            finalKeys.set(i, finalKeys.get(i + 1) );
+                                            finalKeys.set(i + 1, temp);
+                                        }
+                                    }
+                                }
+                            }
+
+
                             for (Map.Entry<Integer,Integer> entry : monthAndItems.entrySet())
                             {
                                 int thisKey = entry.getKey();
@@ -180,5 +178,24 @@ public class MonthOverviewActivity extends AppCompatActivity {
 
     }
 
+//      if(!monthAndItems.isEmpty()){
+//                                            for ( int key : monthAndItems.keySet()) {
+//                                                if(key == thisMonthInt)
+//                                                {
+//                                                    monthAndItems.put(thisMonthInt, monthAndItems.get(key) + 1);
+//                                                }
+//                                                else
+//                                                {
+//                                                    noMatch = true;
+//                                                }
+//
+//                                                if(noMatch){
+//                                                    monthAndItems.put(thisMonthInt, 1);
+//                                                }
+//                                            }
+//                                        }
+//                                        else {
+//                                            monthAndItems.put(thisMonthInt, 1);
+//                                        }
 
 }

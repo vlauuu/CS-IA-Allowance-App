@@ -74,8 +74,6 @@ public class AddSpendingActivity extends AppCompatActivity implements DatePicker
         firestore.collection("Spendings").document(
                 itemString + " " + myUserEmail).set(newSpending);
 
-        Toast.makeText(getApplicationContext(),"Spending Added", Toast.LENGTH_LONG).show();
-
         firestore.collection("Users").get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -98,6 +96,15 @@ public class AddSpendingActivity extends AppCompatActivity implements DatePicker
                                     Double newAllowance = thisAllowance - costDouble;
 
                                     firestore.collection("Users").document(thisEmail).update("allowance", newAllowance);
+
+                                    if(newAllowance > 0)
+                                    {
+                                        Toast.makeText(getApplicationContext(),"Spending Added", Toast.LENGTH_LONG).show();
+                                    }
+                                    else
+                                    {
+                                        Toast.makeText(getApplicationContext(),"STOP SPENDING, YOU HAVE NO MORE MONEY", Toast.LENGTH_LONG).show();
+                                    }
                                 }
                             }
                         }
