@@ -11,7 +11,7 @@
         android:layout_width="396dp"
         android:layout_height="433dp"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="148dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/pikpng_com_shape_png_524727" />
