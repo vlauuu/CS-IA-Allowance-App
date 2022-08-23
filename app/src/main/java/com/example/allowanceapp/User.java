@@ -2,6 +2,13 @@ package com.example.allowanceapp;
 
 import java.util.ArrayList;
 
+/**
+ * It creates a user with suitable params
+ *
+ * @author Vico Lau
+ * @version 0.1
+ */
+
 public class User {
 
     private String email;

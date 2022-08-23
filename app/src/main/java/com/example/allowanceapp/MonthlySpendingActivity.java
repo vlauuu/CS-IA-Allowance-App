@@ -19,6 +19,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The user is able to see the months' spendings with the cost and name of the item showed
+ * It can be clicked on to see further information about the spendings
+ *
+ * @author Vico Lau
+ * @version 0.1
+ */
+
 public class MonthlySpendingActivity extends AppCompatActivity {
 
     RecyclerView recView;
@@ -46,6 +54,10 @@ public class MonthlySpendingActivity extends AppCompatActivity {
 
         updateRecView();
     }
+
+    /**
+     * creates a rec view of all the spendings in the month
+     */
 
     public void updateRecView()
     {

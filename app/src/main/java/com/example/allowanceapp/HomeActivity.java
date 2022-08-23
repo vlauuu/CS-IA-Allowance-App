@@ -24,6 +24,14 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * TThe client can see their allowance on the top of the screen
+ * It also has buttons that help the user navigate to other activities
+ *
+ * @author Vico Lau
+ * @version 0.1
+ */
+
 public class HomeActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;

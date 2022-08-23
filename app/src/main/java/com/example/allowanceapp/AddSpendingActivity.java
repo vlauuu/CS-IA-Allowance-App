@@ -23,6 +23,14 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * It allows the user to add their own spending to the data base after they fill in the
+ * appropriate params
+ *
+ * @author Vico Lau
+ * @version 0.1
+ */
+
 public class AddSpendingActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
 
     FirebaseAuth mAuth;
@@ -55,6 +63,13 @@ public class AddSpendingActivity extends AppCompatActivity implements DatePicker
             }
         });
     }
+
+    /**
+     * This method takes in a View
+     * it adds a spending to the database with the added params
+     *
+     * @param v
+     */
 
     public void addSpending(View v)
     {

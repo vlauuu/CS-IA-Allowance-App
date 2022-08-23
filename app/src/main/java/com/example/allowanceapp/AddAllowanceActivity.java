@@ -20,6 +20,13 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * It allows the user to add to their allowance with their entered mvalue
+ *
+ * @author Vico Lau
+ * @version 0.1
+ */
+
 public class AddAllowanceActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;

@@ -1,5 +1,12 @@
 package com.example.allowanceapp;
 
+/**
+ * It creates a spending with suitable params entered by the client
+ *
+ * @author Vico Lau
+ * @version 0.1
+ */
+
 public class Spending {
 
     private String email;

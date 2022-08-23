@@ -24,6 +24,13 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
+    /**
+     * This is the home page for the user where they can sign up and sign in
+     *
+     * @author Vico Lau
+     * @version 0.1
+     */
+
     private FirebaseAuth mAuth;
     private FirebaseFirestore firestore;
     private EditText emailField;
@@ -42,10 +49,23 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * This method takes in a View
+     * It checks whether the email entered and password is in the database
+     * Then it allows the user to login
+     *
+     * @param v
+     */
+
     public void SignIn(View v) {
 
         String emailInput = emailField.getText().toString();
         String passwordInput = passwordField.getText().toString();
+
+        if(emailInput.isEmpty() || passwordInput.isEmpty())
+        {
+            Toast.makeText(getApplicationContext(), "There are empty field(s), please try again ", Toast.LENGTH_SHORT).show();
+        }
 
         firestore.collection("Users").get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -55,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
                         if (task.isSuccessful())
                         {
                             List<DocumentSnapshot> ds = task.getResult().getDocuments();
+
+                            boolean pwCheck = false;
 
                             for(DocumentSnapshot doc : ds)
                             {
@@ -69,8 +91,13 @@ public class MainActivity extends AppCompatActivity {
                                     {
                                         updateUI(thisEmail);
                                         Toast.makeText(getApplicationContext(), "Correct email and password, welcome!", Toast.LENGTH_SHORT).show();
+                                        pwCheck = true;
                                     }
                                 }
+                            }
+                            if(!pwCheck)
+                            {
+                                Toast.makeText(getApplicationContext(), "Wrong email or password, please try again", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
@@ -103,10 +130,24 @@ public class MainActivity extends AppCompatActivity {
 //        startActivity(startPage);
 //    }
 
+    /**
+     * This method takes in a View
+     * It checks whether the email entered is in the CIS community
+     * Then it checks the spinner to determine what the user type is
+     * Then it adds the user to the database with the appropriate information
+     *
+     * @param v
+     */
+
     public void SignUp(View v) {
 
         String emailInput = emailField.getText().toString();
         String passwordInput = passwordField.getText().toString();
+
+        if(emailInput.isEmpty() || passwordInput.isEmpty())
+        {
+            Toast.makeText(getApplicationContext(), "There are empty field(s), please try again ", Toast.LENGTH_SHORT).show();
+        }
 
         System.out.println(emailInput + passwordInput);
 

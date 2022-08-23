@@ -20,6 +20,13 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This deletes a spending when the user wishes to
+ *
+ * @author Vico Lau
+ * @version 0.1
+ */
+
 public class DeleteSpendingActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
@@ -78,6 +85,15 @@ public class DeleteSpendingActivity extends AppCompatActivity {
                 });
 
     }
+
+    /**
+     * This method takes in a View
+     * It checks whether the email has this spending
+     * Then it changes deleted status to true for the spending
+     * It also adds back the cost of the item to the user's allowance
+     *
+     * @param v
+     */
 
     public void deleteSpending(View v)
     {
