@@ -77,54 +77,63 @@ public class AddSpendingActivity extends AppCompatActivity implements DatePicker
         String costString = costField.getText().toString();
         String descriptionString = descriptionField.getText().toString();
 
-        Double costDouble = Double.parseDouble(costString);
 
-        Intent intent = getIntent();
-        String myUserEmail = intent.getExtras().getString("currUser");
+        if(itemString.isEmpty() || costString.isEmpty() || descriptionString.isEmpty())
+        {
+            Toast.makeText(getApplicationContext(), "There are empty field(s), please try again ", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Double costDouble = Double.parseDouble(costString);
 
-        Spending newSpending = new Spending(myUserEmail, itemString, date, costDouble, descriptionString, false);
+            Intent intent = getIntent();
+            String myUserEmail = intent.getExtras().getString("currUser");
 
-        System.out.println(date);
+            Spending newSpending = new Spending(myUserEmail, itemString, date, costDouble, descriptionString, false);
 
-        firestore.collection("Spendings").document(
-                itemString + " " + myUserEmail).set(newSpending);
+            System.out.println(date);
 
-        firestore.collection("Users").get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task)
-                    {
-                        if (task.isSuccessful())
+            firestore.collection("Spendings").document(
+                    itemString + " " + myUserEmail).set(newSpending);
+
+            firestore.collection("Users").get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task)
                         {
-                            List<DocumentSnapshot> ds = task.getResult().getDocuments();
-
-                            for(DocumentSnapshot doc : ds)
+                            if (task.isSuccessful())
                             {
-                                Map<String, Object> docData = doc.getData();
+                                List<DocumentSnapshot> ds = task.getResult().getDocuments();
 
-                                String thisEmail = (String) docData.get("email");
-
-                                if (thisEmail.equals(myUserEmail))
+                                for(DocumentSnapshot doc : ds)
                                 {
-                                    Double thisAllowance = doc.getDouble("allowance");
+                                    Map<String, Object> docData = doc.getData();
 
-                                    Double newAllowance = thisAllowance - costDouble;
+                                    String thisEmail = (String) docData.get("email");
 
-                                    firestore.collection("Users").document(thisEmail).update("allowance", newAllowance);
-
-                                    if(newAllowance > 0)
+                                    if (thisEmail.equals(myUserEmail))
                                     {
-                                        Toast.makeText(getApplicationContext(),"Spending Added", Toast.LENGTH_LONG).show();
-                                    }
-                                    else
-                                    {
-                                        Toast.makeText(getApplicationContext(),"STOP SPENDING, YOU HAVE NO MORE MONEY", Toast.LENGTH_LONG).show();
+                                        Double thisAllowance = doc.getDouble("allowance");
+
+                                        Double newAllowance = thisAllowance - costDouble;
+
+                                        firestore.collection("Users").document(thisEmail).update("allowance", newAllowance);
+
+                                        if(newAllowance > 0)
+                                        {
+                                            Toast.makeText(getApplicationContext(),"Spending Added", Toast.LENGTH_LONG).show();
+                                        }
+                                        else
+                                        {
+                                            Toast.makeText(getApplicationContext(),"STOP SPENDING, YOU HAVE NO MORE MONEY", Toast.LENGTH_LONG).show();
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
-                });
+                    });
+        }
+
     }
 
 

@@ -148,12 +148,15 @@ public class MainActivity extends AppCompatActivity {
         {
             Toast.makeText(getApplicationContext(), "There are empty field(s), please try again ", Toast.LENGTH_SHORT).show();
         }
+        else
+        {
+            System.out.println(emailInput + passwordInput);
 
-        System.out.println(emailInput + passwordInput);
+            User currentUser = new User(emailInput, passwordInput, 0.0);
+            firestore.collection("Users").document(emailInput).set(currentUser);
+            Toast.makeText(getApplicationContext(),"You are now signed up! Feel free to log in", Toast.LENGTH_LONG).show();
+        }
 
-        User currentUser = new User(emailInput, passwordInput, 0.0);
-        firestore.collection("Users").document(emailInput).set(currentUser);
-        Toast.makeText(getApplicationContext(),"You are now signed up! Feel free to log in", Toast.LENGTH_LONG).show();
 //        updateUI(currentUser);
 
 

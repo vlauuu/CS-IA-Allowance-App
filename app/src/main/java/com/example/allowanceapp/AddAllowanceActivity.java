@@ -55,36 +55,45 @@ public class AddAllowanceActivity extends AppCompatActivity {
     public void addAllowance(View v)
     {
         String aAString = addAllowanceField.getText().toString();
-        Double addAllowanceDouble = Double.parseDouble(aAString);
 
-        firestore.collection("Users").get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task)
-                    {
-                        if (task.isSuccessful())
+        if(aAString.isEmpty())
+        {
+            Toast.makeText(getApplicationContext(), "There are empty field(s), please try again ", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Double addAllowanceDouble = Double.parseDouble(aAString);
+
+            firestore.collection("Users").get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task)
                         {
-                            List<DocumentSnapshot> ds = task.getResult().getDocuments();
-
-                            for(DocumentSnapshot doc : ds)
+                            if (task.isSuccessful())
                             {
-                                Map<String, Object> docData = doc.getData();
+                                List<DocumentSnapshot> ds = task.getResult().getDocuments();
 
-                                String thisEmail = (String) docData.get("email");
-
-                                if (thisEmail.equals(myUserEmail))
+                                for(DocumentSnapshot doc : ds)
                                 {
-                                    Double thisAllowance = doc.getDouble("allowance");
+                                    Map<String, Object> docData = doc.getData();
 
-                                    Double newAllowance = thisAllowance + addAllowanceDouble;
+                                    String thisEmail = (String) docData.get("email");
 
-                                    firestore.collection("Users").document(thisEmail).update("allowance", newAllowance);
+                                    if (thisEmail.equals(myUserEmail))
+                                    {
+                                        Double thisAllowance = doc.getDouble("allowance");
 
-                                    Toast.makeText(getApplicationContext(), "Allowance updated", Toast.LENGTH_SHORT).show();
+                                        Double newAllowance = thisAllowance + addAllowanceDouble;
+
+                                        firestore.collection("Users").document(thisEmail).update("allowance", newAllowance);
+
+                                        Toast.makeText(getApplicationContext(), "Allowance updated", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             }
                         }
-                    }
-                });
+                    });
+        }
+
     }
 }
